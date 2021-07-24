@@ -10,11 +10,12 @@ public class RequestSolicitante {
 
     @CpfCnpj
     @NotBlank
-    @ValidaCampoDuplicado(atributo = "documento", aClass = Solicitante.class)
+    //@ValidaCampoDuplicado(atributo = "documento", aClass = Solicitante.class) //teste com email
     private String documento;
 
     @NotBlank
     @Email
+    //@ValidaCampoDuplicado(atributo = "email", aClass = Solicitante.class) //teste com email
     private String email;
 
     @NotBlank

@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/solicitante")
@@ -20,22 +22,25 @@ public class ControllerSolicitante {
     @PostMapping
     public ResponseEntity<?> test (@RequestBody @Valid RequestSolicitante requestSolicitante){
 
-        Solicitante solicitante = requestSolicitante.toSolicitante();
+        Boolean existeDocumento = repositorySolicitante.existsByDocumento(requestSolicitante.getDocumento());
+        Boolean existeEmail = repositorySolicitante.existsByEmail(requestSolicitante.getEmail());
 
-        repositorySolicitante.save(solicitante);
 
-        return ResponseEntity.status(201).build();
+        if(existeDocumento) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(requestSolicitante);  // pas sur
+        }
+
+        if(existeEmail) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(requestSolicitante);  // pas sur
+        }
+
+            Solicitante solicitante = requestSolicitante.toSolicitante();
+
+            repositorySolicitante.save(solicitante);
+
+            return ResponseEntity.status(201).build();
+
     }
 
-
-    /*
-    @PostMapping
-    public ResponseEntity<RequestSolicitante> novaProposta(@RequestBody @Valid RequestSolicitante requestSolicitante){
-        Solicitante solicitante = requestSolicitante.toSolicitante();
-
-        repositorySolicitante.save(solicitante);
-        return ResponseEntity.created(uriComponentsBuilder.buildAndExpand("/resource/{id}", id).toUri()).body(body);
-    }
-    */
-
+    
    }
