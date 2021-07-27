@@ -1,8 +1,7 @@
 package fase4proposta.proposta;
 
-import fase4proposta.feign.ResultadoAnalise;
-import fase4proposta.feign.SolicitacaoAnalise;
-import fase4proposta.feign.ValidacaoProposta;
+import fase4proposta.cartao.Cartao;
+import fase4proposta.feign.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +14,14 @@ import javax.validation.Valid;
 public class ControllerSolicitante {
 
     private RepositorySolicitante repositorySolicitante; // 35:22
-
     private ValidacaoProposta validacaoProposta;
+    private RecebeCartao recebeCartao;
 
     public ControllerSolicitante(RepositorySolicitante repositorySolicitante,
-                                 ValidacaoProposta validacaoProposta) {
+                                 ValidacaoProposta validacaoProposta, RecebeCartao recebeCartao) {
         this.repositorySolicitante = repositorySolicitante;
         this.validacaoProposta = validacaoProposta;
+        this.recebeCartao = recebeCartao;
     }
 
 
@@ -53,14 +53,19 @@ public class ControllerSolicitante {
         // validação pelo feign
         ResultadoAnalise resultadoAnalise = validacaoProposta.validaProposta(solicitacao);
 
-        System.out.println(resultadoAnalise.getIdProposta());
-        System.out.println(resultadoAnalise.getDocumento());
-        System.out.println(resultadoAnalise.getDocumento());
-        System.out.println(resultadoAnalise.getResultadoSolicitacao());
+        // SE O RESUTADO FOR SEM_RESTRIÇÃO DEVO SOLICITAR UM CARTÃO.
+        ResultadoSolicitacao resultado = resultadoAnalise.getResultadoSolicitacao();
+
+        if(resultado == ResultadoSolicitacao.SEM_RESTRICAO){
+            String idProposta = solicitanteSalva.getId().toString(); // pego para uma variavel o idproposta
+            Cartao cartaoId = recebeCartao.getIdCartao(solicitacao); // estou passando idproposta par o feign
+            solicitanteSalva.setCartaoId(cartaoId.getId());
+
+            System.out.println(solicitanteSalva.getCartaoId());
+        }
 
         //return ResponseEntity.status(201).build();
-        return  ResponseEntity.ok(resultadoAnalise) ;
-
+        return  ResponseEntity.ok(resultadoAnalise);
 
         /*
 

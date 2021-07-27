@@ -57,7 +57,7 @@ public class RequestSolicitante {
 
     public Solicitante toSolicitante(){
         return new Solicitante(this.documento, this.email, this.nome, this.endereco,
-                this.salario);
+                this.salario, null);
     };
 
 

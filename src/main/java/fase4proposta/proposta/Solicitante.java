@@ -25,17 +25,30 @@ public class Solicitante {
     @Column (nullable = false)
     private BigDecimal salario;
 
+    private String cartaoId;
+
     public Solicitante(){
 
     }
 
-    public Solicitante(String documento, String email, String nome, String endereco, BigDecimal salario) {
+    public Solicitante(String documento, String email, String nome, String endereco,
+                       BigDecimal salario, String cartaoId) {
         this.id = id;
         this.documento = documento;
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;
         this.salario = salario;
+        this.cartaoId = cartaoId;
+    }
+
+    public String getCartaoId() {
+        return cartaoId;
+    }
+
+
+    public void setCartaoId(String cartaoId) {
+        this.cartaoId = cartaoId;
     }
 
     public Long getId() {
