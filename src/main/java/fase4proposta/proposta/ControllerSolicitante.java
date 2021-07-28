@@ -1,5 +1,6 @@
 package fase4proposta.proposta;
 
+import fase4proposta.arrechandle.PropostaNaoEncontrada;
 import fase4proposta.cartao.Cartao;
 import fase4proposta.feign.*;
 import org.springframework.http.HttpStatus;
@@ -7,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/solicitante")
+@RequestMapping("/api/v1/propostas")   //solicitante
 public class ControllerSolicitante {
 
     private RepositorySolicitante repositorySolicitante; // 35:22
@@ -26,9 +29,9 @@ public class ControllerSolicitante {
 
 
     @PostMapping
+    @Transactional
     public ResponseEntity<Object> test (@RequestBody @Valid RequestSolicitante requestSolicitante,
                                         UriComponentsBuilder uriComponentsBuilder){
-
 
 
         Boolean existeDocumento = repositorySolicitante.existsByDocumento(requestSolicitante.getDocumento());
@@ -67,17 +70,19 @@ public class ControllerSolicitante {
         //return ResponseEntity.status(201).build();
         return  ResponseEntity.ok(resultadoAnalise);
 
-        /*
+        }
 
-            Solicitante solicitante = requestSolicitante.toSolicitante();
+    @GetMapping("/{propostaId}")
+    public ResponseEntity<Solicitante> pegaProposta(@PathVariable Long propostaId){
+        Optional<Solicitante> temProposta = repositorySolicitante.findById(propostaId);
 
-            repositorySolicitante.save(solicitante);
+        //if(temProposta.isEmpty()) throw new PropostaNaoEncontrada("Proposta de número " +
+          //     propostaId + " não encontrada");
 
-            return ResponseEntity.status(201).build();
-
-         */
-
+        if(temProposta.isPresent()){
+            return ResponseEntity.ok(temProposta.get());
+        }
+            return ResponseEntity.notFound().build();
     }
-
     
    }
