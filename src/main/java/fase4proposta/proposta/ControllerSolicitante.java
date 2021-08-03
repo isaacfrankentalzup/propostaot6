@@ -61,12 +61,11 @@ public class ControllerSolicitante {
 
         if(resultado == ResultadoSolicitacao.SEM_RESTRICAO){
             String idProposta = solicitanteSalva.getId().toString(); // pego para uma variavel o idproposta
-            Cartao cartaoId = recebeCartao.getIdCartao(solicitacao); // estou passando idproposta par o feign
-            solicitanteSalva.setCartaoId(cartaoId.getId());
+            Cartao cartaoid = recebeCartao.getIdCartao(solicitacao); // estou passando idproposta par o feign
+            solicitanteSalva.setCartao(cartaoid);
 
-            System.out.println(solicitanteSalva.getCartaoId());
+            System.out.println(solicitanteSalva.getCartao());
         }
-
         //return ResponseEntity.status(201).build();
         return  ResponseEntity.ok(resultadoAnalise);
 

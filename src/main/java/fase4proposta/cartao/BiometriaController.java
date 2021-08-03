@@ -23,7 +23,7 @@ public class BiometriaController {
 
     @PostMapping("/{cartaoId}")
     //public void salvaBiometria(@PathVariable Long cartaoId)
-    public ResponseEntity<?> salvaBiometria(@PathVariable Long cartaoId){
+    public ResponseEntity<?> salvaBiometria(@PathVariable String cartaoId){
         Optional<Cartao> temCartao = cartaoRepository.findById(cartaoId);
 
 

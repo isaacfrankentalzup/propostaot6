@@ -1,5 +1,7 @@
 package fase4proposta.proposta;
 
+import fase4proposta.cartao.Cartao;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -25,30 +27,31 @@ public class Solicitante {
     @Column (nullable = false)
     private BigDecimal salario;
 
-    private String cartaoId;
+    @OneToOne
+    private Cartao cartao;
 
     public Solicitante(){
 
     }
 
     public Solicitante(String documento, String email, String nome, String endereco,
-                       BigDecimal salario, String cartaoId) {
+                       BigDecimal salario, Cartao cartao) {
         this.id = id;
         this.documento = documento;
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;
         this.salario = salario;
-        this.cartaoId = cartaoId;
+        this.cartao = cartao;
     }
 
-    public String getCartaoId() {
-        return cartaoId;
+    public Cartao getCartao() {
+        return cartao;
     }
 
 
-    public void setCartaoId(String cartaoId) {
-        this.cartaoId = cartaoId;
+    public void setCartao(Cartao cartao) {
+        this.cartao = cartao;
     }
 
     public Long getId() {
