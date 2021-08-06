@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+// 055 & 060
 @FeignClient(url = "http://localhost:8888", name = "recebecartao")
 public interface RecebeCartao {
 

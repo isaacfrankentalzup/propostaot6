@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+//060 tbm...
 @RestController
 @RequestMapping("/api/v1/cartoes")
 public class CartaoController {
@@ -26,6 +27,7 @@ public class CartaoController {
         this.recebeCartao = recebeCartao;
     }
 
+    //055 - 060
     @PostMapping("/bloqueios/{cartaoId}")
     public ResponseEntity<?> bloqueiaCartao(@RequestBody String sistemaResponsavel,
                                             @PathVariable String cartaoId,
@@ -49,6 +51,7 @@ public class CartaoController {
         return ResponseEntity.notFound().build(); //404
     }
 
+    //055 - 060
     @PostMapping("/avisos/{cartaoId}")
     public ResponseEntity<?> avisoCartao(@PathVariable String cartaoId,
                                          @RequestBody AvisoResponse avisoResponse,
