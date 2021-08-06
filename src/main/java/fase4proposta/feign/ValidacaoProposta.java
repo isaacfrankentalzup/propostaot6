@@ -9,4 +9,5 @@ public interface ValidacaoProposta {
     @PostMapping("/api/solicitacao")
     public ResultadoAnalise validaProposta(SolicitacaoAnalise solicitacaoAnalise);
 
+
 }
