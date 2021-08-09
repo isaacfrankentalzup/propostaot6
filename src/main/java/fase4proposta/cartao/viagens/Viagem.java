@@ -1,7 +1,8 @@
 package fase4proposta.cartao.viagens;
 
+// para 075
 import java.time.LocalDateTime;
-
+/*
 public class Viagem {
     private Long id;
     private Long idcartao;
@@ -13,3 +14,5 @@ public class Viagem {
     private String userAgent;
 
 }
+
+ */
