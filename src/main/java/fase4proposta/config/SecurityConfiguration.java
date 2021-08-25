@@ -13,17 +13,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorizeRequests ->
                 authorizeRequests
-                        .antMatchers(HttpMethod.GET, "/api/propostas/**").hasAuthority("SCOPE_propostas:read")
-                        .antMatchers(HttpMethod.GET, "/api/cartoes/**").hasAuthority("SCOPE_cartoes:read")
-                        .antMatchers(HttpMethod.POST, "/api/cartoes/**").hasAuthority("SCOPE_cartoes:write")
-                        .antMatchers(HttpMethod.POST, "/api/propostas/**").hasAuthority("SCOPE_propostas:write")
-                        .antMatchers(HttpMethod.GET, "/api/v1/biometrias/**").hasAuthority("SCOPE_profile")
-                        .antMatchers(HttpMethod.POST, "/api/v1/biometrias/**").hasAuthority("SCOPE_profile")
+                        .antMatchers(HttpMethod.GET, "/api/v1/propostas/**").hasAuthority("SCOPE_profile")
+                        .antMatchers(HttpMethod.POST, "/api/v1/propostas/**").hasAuthority("SCOPE_profile")
+                        .antMatchers(HttpMethod.GET, "/api/v1/cartoes/**").hasAuthority("SCOPE_profile")
+                        .antMatchers(HttpMethod.POST, "/api/v1/cartoes/**").hasAuthority("SCOPE_profile")
                         .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                         .anyRequest().authenticated()
-        )
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+        ).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
     }
 
+
 }
+
+/*
+@Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests(authorizeRequests ->
+                authorizeRequests
+                        .antMatchers(HttpMethod.GET, "/api/v1/propostas/**").hasAuthority("SCOPE_profile")
+                        .antMatchers(HttpMethod.POST, "/api/v1/propostas/**").hasAuthority("SCOPE_profile")
+                        .antMatchers(HttpMethod.GET, "/api/v1/cartoes/**").hasAuthority("SCOPE_profile")
+                        .antMatchers(HttpMethod.POST, "/api/v1/cartoes/**").hasAuthority("SCOPE_profile")
+                        .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                        .anyRequest().authenticated()
+        ).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+    }
+
+*/
 
